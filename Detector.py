@@ -1,5 +1,6 @@
 import json
 import cv2
+import numpy as np
 
 def face_detect(frame,faces,eyes,color):
     #color = json.load(open('color_table.json', 'r')) # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
