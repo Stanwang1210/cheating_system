@@ -22,6 +22,10 @@ eye_cascPath = 'haarcascade_eye.xml'
 face_line_width = 2
 eye_line_width = 2
 detect_line_width = 5
+frame_rate = 10
+frame_width, frame_height = 1280
+record_output_name = 'output.mp4'
+out = cv2.VideoWriter(record_output_name, cv2.VideoWriter_fourcc(*'mp4v'), frame_rate, (frame_width, frame_height), isColor=True)
 
 eyeCascade = cv2.CascadeClassifier(cv2.data.haarcascades + eye_cascPath)
 
@@ -95,6 +99,7 @@ while True:
     else:
         cv2.rectangle(frame, (x1, y1), (x2, y2), color['RED'], detect_line_width)
     """
+    out.write(face_frame)
     cv2.imshow(window_name,face_frame)
     
 
@@ -108,5 +113,5 @@ while True:
     if key == 27: # exit on ESC
         break
 
-vc.release()
+# vc.release()
 cv2.destroyWindow(window_name)
