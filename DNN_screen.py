@@ -23,7 +23,7 @@ face_line_width = 2
 eye_line_width = 2
 detect_line_width = 5
 frame_rate = 10
-frame_width, frame_height = 1280
+frame_width, frame_height = 1280, 720
 record_output_name = 'output.mp4'
 out = cv2.VideoWriter(record_output_name, cv2.VideoWriter_fourcc(*'mp4v'), frame_rate, (frame_width, frame_height), isColor=True)
 
