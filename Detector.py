@@ -38,8 +38,9 @@ def face_detect(frame, faces, eyes, color):
             cv2.putText(frame, 'Test', ((x3),(y+y3)//2), fontFace=cv2.FONT_HERSHEY_TRIPLEX, fontScale=1, color=(0, 255, 0),thickness=1)
             for (x,y,w,h) in eyes:
                 cv2.rectangle(frame,(x,y), (x+w,y+h),color['D_GREEN'],eye_line_width)
-            count += 1
-    if DETECT_FACE:
+            #count += 1
+    
+    if face_count!=0:
         cv2.rectangle(frame, (x1, y1), (x2, y2), color['GREEN'], detect_line_width)
 
 
