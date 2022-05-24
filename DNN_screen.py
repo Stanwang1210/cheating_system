@@ -58,8 +58,8 @@ while True:
     frame = wincap.get_screenshot()
     # scale window size
 
-    scale_window = (1200,675)
-    
+    scale_window = (1280,720)
+    original = frame
     
 
     """
@@ -81,7 +81,7 @@ while True:
     faces = net.forward()
 
     eyes = eyeCascade.detectMultiScale(frame, scaleFactor=1.2, minNeighbors=4)
-    face_frame, face_count = face_detect(frame, faces, eyes, color)
+    face_frame, face_count = face_detect(original,frame, faces, eyes, color)
     print(f"{face_count} faces detected !!")
     face_frame = cv2.resize(face_frame, scale_window)
 
