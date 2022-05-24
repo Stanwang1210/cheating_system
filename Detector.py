@@ -2,9 +2,9 @@ import json
 import cv2
 import numpy as np
 from utils import face_recog
+color = json.load(open("color_table.json", "r"))  # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
 
-
-def face_detect(frame, faces, eyes, color):
+def face_detect(frame, faces, eyes,Name):
     # color = json.load(open('color_table.json', 'r')) # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
 
     face_line_width = 2
@@ -30,16 +30,32 @@ def face_detect(frame, faces, eyes, color):
             face_count += 1
             box = faces[0, 0, i, 3:7] * np.array([width, height, width, height])
             (x, y, x3, y3) = box.astype("int")
-
+            if x > width*2/3:
+                x_pos = 2
+            elif x > width/3:
+                x_pos = 1
+            else:
+                x_pos = 0
+            if y > height/2:
+                y_pos = 1
+            else:
+                y_pos = 0
+            num = 3*y_pos+x_pos
             crop = frame[y - expand : y3 + expand, x - expand : x3 + expand]
-            cv2.imwrite("test.jpg", crop)
-            face_recog("test.jpg")
+
+            pic_path = 'temp/'+str(num)+'.jpg'
+            cv2.imwrite(pic_path, crop)
+
+            #face_recog("test.jpg")
             cv2.rectangle(frame, (x, y), (x3, y3), color["BLUE"], face_line_width)
 
             # cv2.imshow('t',crop)
+            n = Name[num]
+            if n == '':
+                n = 'Unknown'
             cv2.putText(
                 frame,
-                "Test",
+                n,
                 ((x3), (y + y3) // 2),
                 fontFace=cv2.FONT_HERSHEY_TRIPLEX,
                 fontScale=1,
