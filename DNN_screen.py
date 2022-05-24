@@ -13,7 +13,7 @@ from sys import exit
 from time import time
 from capture_win import WindowCapture
 from Detector import face_detect
-
+import _thread
 color = json.load(open("color_table.json", "r"))  # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
 window_name = "Faces found"
 modelFile = "models/res10_300x300_ssd_iter_140000.caffemodel"
