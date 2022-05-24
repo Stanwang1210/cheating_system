@@ -49,12 +49,12 @@ net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
 print("load")
 
 # initialize the WindowCapture class
-path = "MLB.com | The Official Site of Major League Baseball - Google Chrome"
+path = "Meet - scb-bjpo-dkz - Google Chrome"
 wincap = WindowCapture(path)
 
 loop_time = 0
 # 创建新线程
-people_num = 6
+people_num = 2
 Thread = []
 
 os.makedirs('temp', exist_ok=True)
@@ -74,29 +74,30 @@ while True:
     frame = wincap.get_screenshot()
     # scale window size
     scale_window = (1280, 720)
-    
+    print(time())
     blob = cv2.dnn.blobFromImage(
         cv2.resize(frame, (300, 300)), 1.0, (300, 300), (104.0, 117.0, 123.0)
     )
-
+    print(time())
     net.setInput(blob)
+    print(time())
     faces = net.forward()
-
+    print(time())
     eyes = eyeCascade.detectMultiScale(frame, scaleFactor=1.2, minNeighbors=4)
-
+    print(time())
     face_frame, face_count = face_detect(frame, faces, eyes,Name)
     print(f"{face_count} faces detected !!")
-
+    print(time())
     face_frame = cv2.resize(face_frame, scale_window)
-
+    """
     # record video
-    #face_frame2 = cv2.resize(face_frame, (frame_width, frame_height))
-    #out.write(face_frame2)
-
+    face_frame2 = cv2.resize(face_frame, (frame_width, frame_height))
+    out.write(face_frame2)
+    """
     cv2.imshow(window_name, face_frame)
-
+    print(time())
     key = cv2.waitKey(1)
-
+    print(time())
     # debug the loop rate
     print("FPS {}".format(1 / (time() - loop_time)))
     loop_time = time()
