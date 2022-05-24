@@ -11,7 +11,7 @@ import mss
 import numpy as np
 import cv2
 import json
-from deepface import DeepFace
+#from deepface import DeepFace
 import glob
 from sys import exit
 import face_recognition
@@ -49,20 +49,23 @@ def face_recog(img_path):
     
     
     img = face_recognition.load_image_file(img_path)
-    
-    unknown_encoding = face_recognition.face_encodings(img)[0]
-    
+    try:
+        unknown_encoding = face_recognition.face_encodings(img)[0]
+    except:
+        print('Can not detect face')
+        return 'Can not detect face'
     results = face_recognition.compare_faces(data_bace_encodings, unknown_encoding, tolerance=0.4)
     # print(results)
-    name_1 = img_path.replace('.jpg', '').split('/')[-1]
+    name_1 = img_path.replace('.jpg', '').split('\\')[-1]
     name = ''
     for i in range(len(results)):
         if results[i]:
-            name_2 = pic_db[i].replace('.jpg', '').split('/')[-1]
+            name_2 = pic_db[i].replace('.jpg', '').split('\\')[-1]
             name += name_2
             name += ' '
             
             print(f'{name_1} is {name_2}')
+    print(name)
     return name
             
 def entity_checking(img):
@@ -196,10 +199,13 @@ def detect_face(frame, net, eyeCascade):
 
 # record_screen(3)
 print('Start Initialize')
-initialize(True)
+initialize()
+"""
 print('Finish Initialize')
 pic = glob.glob('./*.jpg')
 for p in pic:
     print('---------------------')
     print(p)
     face_recog(p)
+"""
+1
