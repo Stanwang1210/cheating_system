@@ -13,7 +13,8 @@ from sys import exit
 from time import time
 from capture_win import WindowCapture
 from Detector import face_detect
-import _thread
+from MultiThread import myThread
+import os
 color = json.load(open("color_table.json", "r"))  # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
 window_name = "Faces found"
 modelFile = "models/res10_300x300_ssd_iter_140000.caffemodel"
@@ -46,6 +47,14 @@ path = "MLB.com | The Official Site of Major League Baseball - Google Chrome"
 wincap = WindowCapture(path)
 
 loop_time = 0
+# 创建新线程
+people_num = 6
+Thread = []
+os.makedirs('temp', exist_ok=True)
+for i in range(people_num):
+    Thread.append(myThread(i))
+    Thread[-1].start()
+
 while True:
     # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
