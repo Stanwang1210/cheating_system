@@ -53,12 +53,17 @@ def face_recog(img_path):
     unknown_encoding = face_recognition.face_encodings(img)[0]
     
     results = face_recognition.compare_faces(data_bace_encodings, unknown_encoding, tolerance=0.4)
-    print(results)
+    # print(results)
     name_1 = img_path.replace('.jpg', '').split('/')[-1]
+    name = ''
     for i in range(len(results)):
         if results[i]:
             name_2 = pic_db[i].replace('.jpg', '').split('/')[-1]
+            name += name_2
+            name += ' '
+            
             print(f'{name_1} is {name_2}')
+    return name
             
 def entity_checking(img):
     global pic_db
