@@ -18,6 +18,8 @@ def face_detect(frame,faces,eyes,color):
     x1 = int(width * scale)
     x2 = int(width * (1-scale))
 
+    expand = 0
+
     # Draw a rectangle around the faces
     count = 0
     for i in range(faces.shape[2]):
@@ -26,7 +28,11 @@ def face_detect(frame,faces,eyes,color):
             DETECT_FACE = True
             box = faces[0, 0, i, 3:7] * np.array([width, height, width, height])
             (x, y, x3, y3) = box.astype("int")
+            crop = frame[y-expand:y3+expand,x-expand:x3+expand]
             cv2.rectangle(frame, (x, y), (x3, y3), color['BLUE'], face_line_width)
+            
+
+            #cv2.imshow('t',crop)
             cv2.putText(frame, 'Test', ((x3),(y+y3)//2), fontFace=cv2.FONT_HERSHEY_TRIPLEX, fontScale=1, color=(0, 255, 0),thickness=1)
             for (x,y,w,h) in eyes:
                 cv2.rectangle(frame,(x,y), (x+w,y+h),color['D_GREEN'],eye_line_width)

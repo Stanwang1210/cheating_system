@@ -49,10 +49,10 @@ wincap = WindowCapture(path)
 loop_time = 0
 while True:
     # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    screenshot = wincap.get_screenshot()
+    frame = wincap.get_screenshot()
     # scale window size
     scale_window = (1200,675)
-    frame = cv2.resize(screenshot, scale_window)
+    
     
     """
     DETECT_FACE = False
@@ -71,6 +71,7 @@ while True:
     faces = net.forward()
     eyes = eyeCascade.detectMultiScale(frame, scaleFactor = 1.2, minNeighbors = 4)
     face_frame = face_detect(frame,faces,eyes,color)
+    face_frame = cv2.resize(face_frame, scale_window)
     """
     # for (x, y, w, h) in faces:
     #     cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 5)
