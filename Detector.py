@@ -1,7 +1,7 @@
 import json
 import cv2
 import numpy as np
-
+from utils import face_recog
 
 def face_detect(frame, faces, eyes, color):
     # color = json.load(open('color_table.json', 'r')) # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
@@ -18,7 +18,7 @@ def face_detect(frame, faces, eyes, color):
     x1 = int(width * scale)
     x2 = int(width * (1 - scale))
 
-    expand = 0
+    expand = 100
 
     # Draw a rectangle around the faces
     max_people_num = min(max_people_num, faces.shape[2])
@@ -31,6 +31,8 @@ def face_detect(frame, faces, eyes, color):
             (x, y, x3, y3) = box.astype("int")
 
             crop = frame[y-expand:y3+expand,x-expand:x3+expand]
+            cv2.imwrite('test.jpg',crop)
+            face_recog('test.jpg')
             cv2.rectangle(frame, (x, y), (x3, y3), color['BLUE'], face_line_width)
             
 
