@@ -24,13 +24,13 @@ class myThread(threading.Thread):
         print (f"Thread {self.threadID} Start Face Recognition ..")
         while not os.path.exists(self.file) and self.stop == False:
             print(f"Waiting for Image {self.threadID} to be generated ...")
-            time.sleep(1)
+            time.sleep(2)
         #time.sleep(1)
         while  self.stop == False:#(tick() - self.last_recog) > self.interval and
             self.name = face_recog(self.file)
             self.last_recog = tick()
             while (tick() - self.last_recog) < self.interval:
-                time.sleep(1)
+                time.sleep(2)
         print('Thread', self.threadID, 'ended')
             
 
