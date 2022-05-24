@@ -43,7 +43,8 @@ def face_detect(frame, faces, eyes,Name):
             num = 3*y_pos+x_pos
             crop = frame[y - expand : y3 + expand, x - expand : x3 + expand]
 
-            pic_path = 'temp/'+str(num)+'.jpg'
+            #pic_path = 'temp/'+str(num)+'.jpg'
+            pic_path = os.path.join('temp', f'{num}.jpg')
             cv2.imwrite(pic_path, crop)
 
             #face_recog("test.jpg")
@@ -64,7 +65,7 @@ def face_detect(frame, faces, eyes,Name):
             )
             for (x, y, w, h) in eyes:
                 cv2.rectangle(
-                    frame, (x, y), (x + w, y + h), color["D_GREEN"], eye_line_width
+                    frame, (x, y), (x + w, y + h), color["RED"], eye_line_width
                 )
             # count += 1
 

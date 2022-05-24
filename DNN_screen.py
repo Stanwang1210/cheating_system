@@ -58,6 +58,7 @@ people_num = 6
 Thread = []
 
 os.makedirs('temp', exist_ok=True)
+
 for i in range(people_num):
     Thread.append(myThread(i))
     Thread[-1].start()
