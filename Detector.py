@@ -52,12 +52,15 @@ def face_detect(frame, faces, eyes,Name):
             cv2.rectangle(frame, (x, y), (x3, y3), color["BLUE"], face_line_width)
 
             # cv2.imshow('t',crop)
-            n = Name[num]
+            if num>1:
+                n = 'out'
+            else:
+                n = Name[num] 
             if n == '':
                 n = 'Unknown'
             cv2.putText(
                 frame,
-                n,
+                n+ str(num),
                 ((x3), (y + y3) // 2),
                 fontFace=cv2.FONT_HERSHEY_TRIPLEX,
                 fontScale=1,
@@ -66,7 +69,7 @@ def face_detect(frame, faces, eyes,Name):
             )
             for (x, y, w, h) in eyes:
                 cv2.rectangle(
-                    frame, (x, y), (x + w, y + h), color["RED"], eye_line_width
+                    frame, (x, y), (x + w, y + h), color["D_GREEN"], eye_line_width
                 )
             # count += 1
 
