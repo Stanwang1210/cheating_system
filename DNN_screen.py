@@ -108,7 +108,7 @@ while True:
     else:
         cv2.rectangle(frame, (x1, y1), (x2, y2), color['RED'], detect_line_width)
     """
-    face_frame = cv2.cvtColor(face_frame, cv2.COLOR_BGR2RGB)
+    #face_frame = cv2.cvtColor(face_frame, cv2.COLOR_BGR2RGB)
     face_frame = cv2.resize(face_frame, (frame_width, frame_height))
     out.write(face_frame)
     cv2.imshow(window_name, face_frame)
