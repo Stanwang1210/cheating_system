@@ -3,10 +3,22 @@ import cv2
 import numpy as np
 from utils import face_recog
 import os
-color = json.load(open("color_table.json", "r"))  # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
+from MultiThread import myThread
 
-def face_detect(frame, faces, eyes,Name):
+color = json.load(open("color_table.json", "r"))  # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
+people_num = 3
+Thread = []
+for i in range(people_num):
+    Thread.append(myThread(i))
+    Thread[-1].start()
+
+def face_detect(frame, faces, eyes):
     # color = json.load(open('color_table.json', 'r')) # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
+
+    Name = []
+    for t in Thread:
+        Name.append(t.name)
+    print(Name)
 
     face_line_width = 2
     eye_line_width = 2
@@ -31,6 +43,7 @@ def face_detect(frame, faces, eyes,Name):
             face_count += 1
             box = faces[0, 0, i, 3:7] * np.array([width, height, width, height])
             (x, y, x3, y3) = box.astype("int")
+            #print(x,y,width,height)
             if x > width*2/3:
                 x_pos = 2
             elif x > width/3:
@@ -50,9 +63,9 @@ def face_detect(frame, faces, eyes,Name):
 
             #face_recog("test.jpg")
             cv2.rectangle(frame, (x, y), (x3, y3), color["BLUE"], face_line_width)
-
+            #cv2.line(frame, (0,height//2),(width,height//2), color["BLUE"], face_line_width)
             # cv2.imshow('t',crop)
-            if num>1:
+            if num>=people_num:
                 n = 'out'
             else:
                 n = Name[num] 
@@ -60,7 +73,7 @@ def face_detect(frame, faces, eyes,Name):
                 n = 'Unknown'
             cv2.putText(
                 frame,
-                n+ str(num),
+                n,
                 ((x3), (y + y3) // 2),
                 fontFace=cv2.FONT_HERSHEY_TRIPLEX,
                 fontScale=1,
@@ -73,10 +86,14 @@ def face_detect(frame, faces, eyes,Name):
                 )
             # count += 1
 
-    if face_count != 0:
+    if face_count == 2:
         cv2.rectangle(frame, (x1, y1), (x2, y2), color["GREEN"], detect_line_width)
 
     else:
         cv2.rectangle(frame, (x1, y1), (x2, y2), color["RED"], detect_line_width)
     return frame, face_count
     # cv2.imshow(window_name,frame)
+
+def shut_thread():
+    for t in Thread:
+        t.stop = True

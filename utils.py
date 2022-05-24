@@ -54,6 +54,8 @@ def face_recog(img_path):
     global data_bace_encodings
 
     img = face_recognition.load_image_file(img_path)
+    print(img.shape)
+    
     try:
         unknown_encoding = face_recognition.face_encodings(img)[0]
     except:
@@ -62,7 +64,7 @@ def face_recog(img_path):
     results = face_recognition.compare_faces(
         data_bace_encodings, unknown_encoding, tolerance=0.4
     )
-    # print(results)
+    #print(results)
     name_1 = img_path.replace(".jpg", "").split("\\")[-1]
     name = ""
     for i in range(len(results)):
