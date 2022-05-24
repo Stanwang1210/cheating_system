@@ -48,11 +48,11 @@ wincap = WindowCapture(path)
 loop_time = 0
 while True:
     # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    
+
     frame = wincap.get_screenshot()
     # scale window size
-    scale_window = (1280,720)
- 
+    scale_window = (1280, 720)
+
     blob = cv2.dnn.blobFromImage(
         cv2.resize(frame, (300, 300)), 1.0, (300, 300), (104.0, 117.0, 123.0)
     )

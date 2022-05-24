@@ -11,10 +11,12 @@ import mss
 import numpy as np
 import cv2
 import json
-#from deepface import DeepFace
+
+# from deepface import DeepFace
 import glob
 from sys import exit
 import face_recognition
+
 face_line_width = 2
 eye_line_width = 2
 detect_line_width = 5
@@ -27,8 +29,10 @@ eye_cascPath = "haarcascade_eye.xml"
 pic_db = glob.glob("./data_base/*.jpg")
 data_bace_encodings = []
 
+
 def tick():
     return time.time()
+
 
 def initialize(reload=False):
     global data_bace_encodings, pic_db
@@ -39,44 +43,48 @@ def initialize(reload=False):
             try:
                 data_bace_encodings.append(face_recognition.face_encodings(img)[0])
             except:
-                print('Can not dicriminate ', pic)
-                
-        np.save('data_base_encodings.npy', data_bace_encodings)
+                print("Can not dicriminate ", pic)
+
+        np.save("data_base_encodings.npy", data_bace_encodings)
     else:
-        data_bace_encodings = np.load('data_base_encodings.npy')
+        data_bace_encodings = np.load("data_base_encodings.npy")
+
+
 def face_recog(img_path):
     global data_bace_encodings
-    
-    
+
     img = face_recognition.load_image_file(img_path)
     try:
         unknown_encoding = face_recognition.face_encodings(img)[0]
     except:
-        print('Can not detect face')
-        return 'Can not detect face'
-    results = face_recognition.compare_faces(data_bace_encodings, unknown_encoding, tolerance=0.4)
+        print("Can not detect face")
+        return "Can not detect face"
+    results = face_recognition.compare_faces(
+        data_bace_encodings, unknown_encoding, tolerance=0.4
+    )
     # print(results)
-    name_1 = img_path.replace('.jpg', '').split('\\')[-1]
-    name = ''
+    name_1 = img_path.replace(".jpg", "").split("\\")[-1]
+    name = ""
     for i in range(len(results)):
         if results[i]:
-            name_2 = pic_db[i].replace('.jpg', '').split('\\')[-1]
+            name_2 = pic_db[i].replace(".jpg", "").split("\\")[-1]
             name += name_2
-            name += ' '
-            
-            print(f'{name_1} is {name_2}')
+            name += " "
+
+            print(f"{name_1} is {name_2}")
     print(name)
     return name
-            
+
+
 def entity_checking(img):
     global pic_db
-    
+
     # print(pic_db)
     # exit()
     model = ["Facenet", "VGG-Face", "Facenet512"]
     img1 = [[img, img2] for img2 in pic_db]
     result = DeepFace.verify(
-        img1_path=img1, 
+        img1_path=img1,
         model_name=model[2],
         enforce_detection=False,
         distance_metric="euclidean_l2",
@@ -95,17 +103,20 @@ def entity_checking(img):
     min_dis = 100
     for i in range(len(img1)):
         pair = f"pair_{i+1}"
-        if result[pair]['distance'] < min_dis:
+        if result[pair]["distance"] < min_dis:
             max_idx = i
-            min_dis = result[pair]['distance']
-        
-        print(f"{img1[i][0]} and  {img1[i][1]} are same person: {result[pair]['verified']}")
+            min_dis = result[pair]["distance"]
+
+        print(
+            f"{img1[i][0]} and  {img1[i][1]} are same person: {result[pair]['verified']}"
+        )
         print(f"distance is {result[pair]['distance']}")
-        print('------------------------------------------')
-    name_1 = img.replace('jpg', '').split('/')[-1]
-    name_2 = pic_db[max_idx].replace('.jpg', '').split('/')[-1]
-    print(f'The most similar one of {name_1} is  {name_2}')
+        print("------------------------------------------")
+    name_1 = img.replace("jpg", "").split("/")[-1]
+    name_2 = pic_db[max_idx].replace(".jpg", "").split("/")[-1]
+    print(f"The most similar one of {name_1} is  {name_2}")
     return name_2
+
 
 def record_screen(
     length=10,
@@ -198,7 +209,7 @@ def detect_face(frame, net, eyeCascade):
 
 
 # record_screen(3)
-print('Start Initialize')
+print("Start Initialize")
 initialize()
 """
 print('Finish Initialize')
