@@ -36,7 +36,7 @@ class myThread(threading.Thread):
             
             if not os.path.exists(self.file) :
                 print(f"Waiting for Image {num} to be generated ...")
-                time.sleep(self.threadID+1)
+                time.sleep((self.threadID+1)*0.5)
             #time.sleep(1)
             else:#(tick() - self.last_recog) > self.interval and
                 if init == 0:
@@ -56,7 +56,7 @@ class myThread(threading.Thread):
                 #cv2.imshow('test',self.file)
                 self.last_recog = tick()
                 while (tick() - self.last_recog) < self.interval:
-                    time.sleep(4)
+                    time.sleep(3)
             num = (num + self.total_thread)%self.total_pic
             self.file = os.path.join('temp', f'{num}.jpg') 
             init = (init +1) % self.add
