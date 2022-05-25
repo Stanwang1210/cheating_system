@@ -27,7 +27,9 @@ face_line_width = 2
 eye_line_width = 2
 detect_line_width = 5
 """
+print('Here')
 
+"""
 frame_rate = 10
 frame_width, frame_height = 1280, 720
 record_output_name = "output.mp4"
@@ -38,7 +40,7 @@ out = cv2.VideoWriter(
     (frame_width, frame_height),
     isColor=True,
 )
-
+"""
 
 eyeCascade = cv2.CascadeClassifier(cv2.data.haarcascades + eye_cascPath)
 
@@ -49,14 +51,12 @@ net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
 print("load")
 
 # initialize the WindowCapture class
-path = "MLB.com | The Official Site of Major League Baseball - Google Chrome"
+path = "Meet - rhm-uhhr-tez - Google Chrome"
 wincap = WindowCapture(path)
 
 loop_time = 0
 
 
-
-os.makedirs('temp', exist_ok=True)
 """
 for i in range(people_num):
     Thread.append(myThread(i))
@@ -88,8 +88,8 @@ while True:
     face_frame = cv2.resize(face_frame, scale_window)
     
     # record video
-    face_frame2 = cv2.resize(face_frame, (frame_width, frame_height))
-    out.write(face_frame2)
+    #face_frame2 = cv2.resize(face_frame, (frame_width, frame_height))
+    #out.write(face_frame2)
     
     cv2.imshow(window_name, face_frame)
     #print(time())

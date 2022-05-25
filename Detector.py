@@ -4,7 +4,10 @@ import numpy as np
 from utils import face_recog
 import os
 from MultiThread import myThread
+import shutil
 
+shutil.rmtree('temp')
+os.makedirs('temp', exist_ok=True)
 color = json.load(open("color_table.json", "r"))  # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
 people_num = 3
 total_pic = 6
@@ -15,7 +18,7 @@ for i in range(people_num):
 
 def face_detect(frame, faces, eyes):
     # color = json.load(open('color_table.json', 'r')) # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
-
+    Unknown_error = False
     Name = []
     for t in Thread:
         Name.append(t.name1)
@@ -40,6 +43,8 @@ def face_detect(frame, faces, eyes):
     # Draw a rectangle around the faces
     max_people_num = min(max_people_num, faces.shape[2])
     face_count = 0
+    pic_faces = np.zeros(total_pic)
+    num_face_error = False
     for i in range(max_people_num):
         confidence = faces[0, 0, i, 2]
         if confidence > 0.5:
@@ -58,6 +63,9 @@ def face_detect(frame, faces, eyes):
             else:
                 y_pos = 0
             num = 3*y_pos+x_pos
+            pic_faces[num] += 1
+            if pic_faces[num]>1:
+                num_face_error = True
             crop = frame[y - expand : y3 + expand, x - expand : x3 + expand]
 
             #pic_path = 'temp/'+str(num)+'.jpg'
@@ -74,6 +82,8 @@ def face_detect(frame, faces, eyes):
                 n = Name[num] 
             if n == '':
                 n = 'Unknown'
+            if n == 'Unknown':
+                Unknown_error = True
             cv2.putText(
                 frame,
                 n,
@@ -98,7 +108,8 @@ def face_detect(frame, faces, eyes):
                 color=color["D_GREEN"],
                 thickness=1,
             )
-    if face_count > 5:
+
+    if face_count > 3 and Unknown_error == False and num_face_error == False:
         cv2.rectangle(frame, (x1, y1), (x2, y2), color["GREEN"], detect_line_width)
 
     else:

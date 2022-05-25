@@ -12,7 +12,7 @@ import os
 from utils import face_recog, tick
 import cv2
 class myThread(threading.Thread):
-    def __init__(self, threadID, interval = 10,t_th = 3, t_p = 6):
+    def __init__(self, threadID, interval = 5,t_th = 3, t_p = 6):
         threading.Thread.__init__(self)
         
         self.threadID = threadID
@@ -56,7 +56,7 @@ class myThread(threading.Thread):
                 #cv2.imshow('test',self.file)
                 self.last_recog = tick()
                 while (tick() - self.last_recog) < self.interval:
-                    time.sleep(5)
+                    time.sleep(4)
             num = (num + self.total_thread)%self.total_pic
             self.file = os.path.join('temp', f'{num}.jpg') 
             init = (init +1) % self.add
