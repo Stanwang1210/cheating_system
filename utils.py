@@ -60,7 +60,7 @@ def face_recog(img_path):
         unknown_encoding = face_recognition.face_encodings(img)[0]
     except:
         print("Can not detect face")
-        return "Can not detect face"
+        return "Unknown"#"Can not detect face"
     results = face_recognition.compare_faces(
         data_bace_encodings, unknown_encoding, tolerance=0.4
     )

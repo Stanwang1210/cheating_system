@@ -7,6 +7,7 @@ from MultiThread import myThread
 
 color = json.load(open("color_table.json", "r"))  # 'RED' 'GREEN' 'BLUE' 'D_GREEN'
 people_num = 3
+total_pic = 6
 Thread = []
 for i in range(people_num):
     Thread.append(myThread(i))
@@ -17,7 +18,9 @@ def face_detect(frame, faces, eyes):
 
     Name = []
     for t in Thread:
-        Name.append(t.name)
+        Name.append(t.name1)
+    for t in Thread:
+        Name.append(t.name2)
     print(Name)
 
     face_line_width = 2
@@ -32,7 +35,7 @@ def face_detect(frame, faces, eyes):
     x1 = int(width * scale)
     x2 = int(width * (1 - scale))
 
-    expand = 100
+    expand = 50
 
     # Draw a rectangle around the faces
     max_people_num = min(max_people_num, faces.shape[2])
@@ -65,7 +68,7 @@ def face_detect(frame, faces, eyes):
             cv2.rectangle(frame, (x, y), (x3, y3), color["BLUE"], face_line_width)
             #cv2.line(frame, (0,height//2),(width,height//2), color["BLUE"], face_line_width)
             # cv2.imshow('t',crop)
-            if num>=people_num:
+            if num>=total_pic:
                 n = 'out'
             else:
                 n = Name[num] 
@@ -77,7 +80,7 @@ def face_detect(frame, faces, eyes):
                 ((x3), (y + y3) // 2),
                 fontFace=cv2.FONT_HERSHEY_TRIPLEX,
                 fontScale=1,
-                color=(0, 255, 0),
+                color=color["D_GREEN"],
                 thickness=1,
             )
             for (x, y, w, h) in eyes:
@@ -86,7 +89,16 @@ def face_detect(frame, faces, eyes):
                 )
             # count += 1
 
-    if face_count == 2:
+    cv2.putText(
+                frame,
+                f'{face_count} faces found',
+                ((x1+50), (y2-50) ),
+                fontFace=cv2.FONT_HERSHEY_TRIPLEX,
+                fontScale=1,
+                color=color["D_GREEN"],
+                thickness=1,
+            )
+    if face_count > 5:
         cv2.rectangle(frame, (x1, y1), (x2, y2), color["GREEN"], detect_line_width)
 
     else:

@@ -49,7 +49,7 @@ net = cv2.dnn.readNetFromCaffe(configFile, modelFile)
 print("load")
 
 # initialize the WindowCapture class
-path = "Meet - dxu-kwsj-uvu - Google Chrome"
+path = "MLB.com | The Official Site of Major League Baseball - Google Chrome"
 wincap = WindowCapture(path)
 
 loop_time = 0
