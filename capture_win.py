@@ -21,10 +21,8 @@ class WindowCapture:
         if not self.hwnd:
             raise Exception("Window not found: {}".format(window_name))
 
-        # get the window size
-        window_rect = win32gui.GetWindowRect(self.hwnd)
-        self.w = 1920  # (window_rect[2] - window_rect[0])
-        self.h = 1080  # (window_rect[3] - window_rect[1])
+        self.w = 1920 
+        self.h = 1080  
 
         # account for the window border and titlebar and cut them off
         border_pixels = 8
