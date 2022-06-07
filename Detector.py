@@ -72,10 +72,8 @@ def face_detect(frame, faces, eyes):
             pic_path = os.path.join('temp', f'{num}.jpg')
             cv2.imwrite(pic_path, crop)
 
-            #face_recog("test.jpg")
             cv2.rectangle(frame, (x, y), (x3, y3), color["BLUE"], face_line_width)
-            #cv2.line(frame, (0,height//2),(width,height//2), color["BLUE"], face_line_width)
-            # cv2.imshow('t',crop)
+
             if num>=total_pic:
                 n = 'out'
             else:
